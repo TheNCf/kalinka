@@ -1,0 +1,64 @@
+.content{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.searchbar{
+    width: 255px;
+    border-radius: 20px;
+    background: #444444;
+    padding: 0px;
+}
+
+.searchbarcontainer{
+    font-size: 0px;
+    margin: 0px;
+    margin-right: 60px;
+    padding: 0px;
+}
+
+.listofcontents{
+    width:calc(100% - 315px);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pagebuttons{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.pagebuttons .pagebuttonscontainer{
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+}
+
+.groupname{
+    margin: 0px;
+    padding: 0px;
+    margin-left: 10px;
+    padding-top: 25px;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    font-size: 28px;
+}
+
+.group{
+    margin-left: 20px;
+}
+
+.groupposition{
+    margin: 0px;
+    padding: 0px;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+.colorprobes{
+    margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}

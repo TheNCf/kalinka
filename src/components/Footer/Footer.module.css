@@ -1,0 +1,50 @@
+.footer{
+    background-color: #444444;
+    margin-top: 50px;
+    border-radius: 20px 20px 0px 0px;
+    margin-top: 75px;
+}
+
+.menulist{
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.contactscol{
+    margin: 25px 0px;
+    margin-right: 40px;
+    width: 360px;
+}
+
+.contactscol h1{
+    margin: 0px;
+    margin-left: 20px;
+    font-weight: 300;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.contactscol h2{
+    margin: 0px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.contactscolleft{
+    margin: 25px 0px;
+    margin-right: 0px;
+    display: grid;
+    align-items: end;
+    text-align: end;
+    width: 360px;
+}
+.contactscolleft h2{
+    margin: 0px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #FFFFFF;
+}

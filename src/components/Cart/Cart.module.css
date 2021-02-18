@@ -1,0 +1,16 @@
+.cartitems{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.group{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cost{
+    display: flex;
+    align-items: center;
+}

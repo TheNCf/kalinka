@@ -1,0 +1,40 @@
+.link{
+    text-decoration: none;
+}
+
+.menubutton{
+    transition: all 0.25s ease-in-out;
+    background-color: #444444;
+    border-radius: 20px;
+    padding: 1px 12px;
+    border: 2px solid #FFFFFF;
+    display: flex;
+    align-items: center;
+}
+
+.image{
+    width: auto;
+    height: 28px;
+    margin-right: 10px;
+    text-decoration: none;
+    filter: invert(1);
+    transition: all 0.25s ease-in-out;
+}
+
+.caption{
+    color: #FFFFFF;
+    transition: all 0.25s ease-in-out;
+}
+
+.menubutton:hover{
+    background-color: #FFFFFF;
+    border-color: #444444;
+}
+
+.menubutton:hover .caption{
+    color: #444444;
+}
+
+.menubutton:hover .image{
+    filter: invert(0.259);
+}

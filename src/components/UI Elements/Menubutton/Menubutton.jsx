@@ -12,12 +12,10 @@ function Menubutton(props) {
         );
     }
     return(
-        <a className={css.link} type={props.type} name={props.name}>
-            <div className={css.menubutton}>
-                {image}
-                <p className={css.caption} style={{fontSize: props.fontsize}}>{props.caption}</p>
-            </div>
-        </a>
+        <div className={css.menubutton}>
+            {image}
+            <p className={css.caption} style={{fontSize: props.fontsize}}>{props.caption}</p>
+        </div>
     );
 }
 

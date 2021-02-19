@@ -39,36 +39,47 @@ let colors = [
 ];
 
 function Searchpage({getAllModels, modelsdata}) {
-    
-    useEffect(() => {getAllModels();
-        // setPages(Math.ceil(allItems.length/itemsPerPage));
-        // let items = [];
-        // for (let i = currentPage * itemsPerPage - itemsPerPage; i < currentPage * itemsPerPage; i++) {
-        //     items.push(allItems[i]);
-        // }
-    }, [getAllModels]);
-    const allItems = modelsdata.models;
-    console.log(allItems);
-    // const [itemsPerPage, setItemsPerPage] = useState(2);
-    // const [pages, setPages] = useState();
-    // const [currentPage, setCurrentPage] = useState(1);
-    //const [itemElements, setItemElements] = useState();
-    let itemElements = (allItems.map(i => <Itemcard itemname={i.name} price={i.price + " руб."} discount={i.discount} img={i.img} margin="0 0 10px auto" key={i.name + i.price + i.discount} />));
-//console.log(pages)
-    // let pagesAr = [];
-    // for (let i = 0; i < pages; i++) {
-    //     pagesAr[i] = i + 1;
-    // }
+    let itemsPerPage = 2;
 
-    // const updateCurrentPage = (value) => {
-    //     setCurrentPage(value);
-    // }
+    useEffect(() => {getAllModels();
+        setAllItems(modelsdata.models);
+        setLoading(false);
+    }, [getAllModels]);
+
+    //const allItems = modelsdata.models;
+    const [allItems, setAllItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    let pagesAr = [];
+    let items = [];
+    let itemElements;
+    let pageElements;
+
+    const updateCurrentPage = (value) => {
+        setCurrentPage(value);
+    }
+
+    if (!loading){
+        let pages = Math.ceil(allItems.length/itemsPerPage);
+
+        for (let i = 0; i < pages; i++) {
+            pagesAr[i] = i + 1;
+        }
+        
+        for (let i = currentPage * itemsPerPage - itemsPerPage; i < currentPage * itemsPerPage; i++) {
+            items.push(allItems[i]);
+        }
+        console.log(allItems);
+        itemElements = items.map(i => <Itemcard itemname={i.name} price={i.price + " руб."} discount={i.discount} img={i.img} margin="0 0 10px auto" key={i.name + i.price + i.discount} />);
+        pageElements = pagesAr.map(p => <Circlebutton caption={p} value={p} onClick={updateCurrentPage} key={p} />);
+    }
 
     let positionElements = positions.map(p => <p className={css.groupposition}>{p}</p>);
     let sizeElements = sizes.map(s => <Checkbox name="size" caption={s} value={s}/>);
     let colorElements = colors.map(c => <Colorprobe color={c} name="color" key={c} />);
     
-    //let pageElements = pagesAr.map(p => <Circlebutton caption={p} value={p} onClick={updateCurrentPage} key={p} />);
+
     return(
         <div className={css.content + " container"}>
             <div className={css.searchbarcontainer}>
@@ -96,7 +107,7 @@ function Searchpage({getAllModels, modelsdata}) {
             <div className={css.listofcontents}>
                 {itemElements}
                 <div className={css.pagebuttons}>
-                    <div className={css.pagebuttonscontainer}>{/*pageElements*/}</div>
+                    <div className={css.pagebuttonscontainer}>{pageElements}</div>
                 </div>
             </div>
         </div>

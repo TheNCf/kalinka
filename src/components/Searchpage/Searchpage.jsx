@@ -39,14 +39,13 @@ let colors = [
 ];
 
 function Searchpage({getAllModels, modelsdata}) {
-    let itemsPerPage = 2;
+    let itemsPerPage = 3;
 
     useEffect(() => {getAllModels();
         setAllItems(modelsdata.models);
         setLoading(false);
-    }, [getAllModels]);
+    }, [modelsdata.models]);
 
-    //const allItems = modelsdata.models;
     const [allItems, setAllItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -60,7 +59,7 @@ function Searchpage({getAllModels, modelsdata}) {
         setCurrentPage(value);
     }
 
-    if (!loading){
+    if (allItems.length > 0){
         let pages = Math.ceil(allItems.length/itemsPerPage);
 
         for (let i = 0; i < pages; i++) {
@@ -68,9 +67,8 @@ function Searchpage({getAllModels, modelsdata}) {
         }
         
         for (let i = currentPage * itemsPerPage - itemsPerPage; i < currentPage * itemsPerPage; i++) {
-            items.push(allItems[i]);
+            if (allItems[i] != null){ items.push(allItems[i]); }
         }
-        console.log(allItems);
         itemElements = items.map(i => <Itemcard itemname={i.name} price={i.price + " руб."} discount={i.discount} img={i.img} margin="0 0 10px auto" key={i.name + i.price + i.discount} />);
         pageElements = pagesAr.map(p => <Circlebutton caption={p} value={p} onClick={updateCurrentPage} key={p} />);
     }

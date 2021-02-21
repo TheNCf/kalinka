@@ -19,19 +19,19 @@
 
 .listofcontents{
     width:calc(100% - 315px);
+}
+
+.listofcontentscontainer{
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-}
-
-.pagebuttons{
-    width: 100%;
-    margin: auto;
-    display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
-.pagebuttons .pagebuttonscontainer{
+.pagebuttonscontainer{
     margin: 0px auto;
+    margin-top: 10px;
     display: flex;
     align-items: center;
 }

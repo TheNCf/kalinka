@@ -8,7 +8,7 @@ import Itemcard from "../UI Elements/Itemcard/Itemcard";
 import Circlebutton from "../UI Elements/Circlebutton/Circlebutton";
 
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getAllModels, getAllColors } from '../../Redux/action';
+import { getAllModels, getAllColors, getAllSizes } from '../../Redux/action';
 
 let positions = [
     'Блузки',
@@ -36,9 +36,8 @@ let colors = [
     '#AAAAAA',
     '#FFFFFF'
 ];
-
-function Searchpage({getAllModels, modelsdata}, {getAllColors, itemsdata}) {
-    let itemsPerPage = 3;
+function Searchpage({getAllModels, modelsdata, getAllColors, getAllSizes, itemsdata}) {
+    let itemsPerPage = 4;
     const [reloader, setReloader] = useState(0);
     const [allItems, setAllItems] = useState([]);
     const [allColors, setAllColors] = useState([]);
@@ -48,10 +47,10 @@ function Searchpage({getAllModels, modelsdata}, {getAllColors, itemsdata}) {
     useEffect(() => {
         getAllModels();
         getAllColors();
-        //getAllSizes();
+        getAllSizes();
         setAllItems(modelsdata.models);
         setAllColors(itemsdata.colors);
-        //setAllSizes(sizesdata.sizes);
+        setAllSizes(itemsdata.sizes);
         if (reloader < 10){
             setTimeout(() => {
                 setReloader(reloader + 1);
@@ -83,12 +82,11 @@ function Searchpage({getAllModels, modelsdata}, {getAllColors, itemsdata}) {
                 items.push(allItems[i]);
             }
         }
-        itemElements = items.map(i => <Itemcard itemname={i.name} price={i.price + " руб."} discount={i.discount} img={'data:image/jpg;base64,' + btoa(Array.from(new Uint8Array(i.image.data)).map(b => String.fromCharCode(b)).join(''))} margin="0 0 10px auto" key={i.name + i.price + i.discount} />);
+        itemElements = items.map(i => <Itemcard itemname={i.name} price={i.price + " руб."} discount={i.discount} img={'data:image/jpg;base64,' + btoa(Array.from(new Uint8Array(i.image.data)).map(b => String.fromCharCode(b)).join(''))} margin="0 0 10px 0" key={i.name + i.price + i.discount} />);
         pageElements = pagesAr.map(p => <Circlebutton caption={p} value={p} onClick={updateCurrentPage} key={p} />);
         positionElements = positions.map(p => <p className={css.groupposition}>{p}</p>);
-        sizeElements = sizes.map(s => <Checkbox name="size" caption={s} value={s}/>);
-        colorElements = colors.map(c => <Colorprobe color={c} name="color" key={c} />);
-        console.log(colors[0]);
+        sizeElements = allSizes.map(s => <Checkbox name="size" caption={s.size} value={s.size}/>);
+        colorElements = allColors.map(c => <Colorprobe color={c.color} name="color" key={c.color} />);
     }
 
     return(
@@ -116,8 +114,10 @@ function Searchpage({getAllModels, modelsdata}, {getAllColors, itemsdata}) {
                 </div>
             </div>
             <div className={css.listofcontents}>
-                {itemElements}
-                <div className={css.pagebuttons}>
+                <div className={css.listofcontentscontainer}>
+                    {itemElements}
+                </div>
+                <div className={css.listofcontentscontainer}>
                     <div className={css.pagebuttonscontainer}>{pageElements}</div>
                 </div>
             </div>
@@ -126,6 +126,6 @@ function Searchpage({getAllModels, modelsdata}, {getAllColors, itemsdata}) {
 }
 
 const mapStateToProps = (state) => state;
-const mapDispatchToProps = {getAllModels, getAllColors}
+const mapDispatchToProps = {getAllModels, getAllColors, getAllSizes}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Searchpage);

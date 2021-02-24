@@ -1,12 +1,10 @@
 import axios from "axios";
 import { GETALLMODELS, GETALLTYPES, GETALLCOLORS, GETALLSIZES } from "./types";
 
-export const getAllModels = (reqTypeFilter, reqSizeFilter, reqColorFilter) => {
+export const getAllModels = (reqFilter) => {
     return async dispatch => {
-        const response = await axios.get("/selectModels", {
-            typeFilter: reqTypeFilter,
-            sizeFilter: reqSizeFilter,
-            colorFilter: reqColorFilter
+        const response = await axios.post("/selectModels", {
+            filter: reqFilter,
         });
         
         dispatch({

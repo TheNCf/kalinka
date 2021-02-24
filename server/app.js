@@ -13,17 +13,14 @@ const connection = mysql.createConnection({
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/selectModels', async (req, res, next) => {
-  const types = req.body.typeFilter;
-  const sizes = req.body.sizeFilter;
-  const colors = req.body.colorFilter;
-  console.log(req.body);
+app.post('/selectModels', async (req, res, next) => {
+  const filter = req.body.filter;
+  
   let modelsData = {};
 
   modelsData.arr = () => {
     return new Promise((resolve, reject) => {
-      //'+ types + sizes + colors +'
-      connection.query('SELECT models.id_model, MAX(models.name) AS name, MAX(models.kind) AS kind, MAX(models.type) AS type, MAX(models.price) AS price, MAX(models.discount) AS discount, MAX(images.image) AS image FROM models INNER JOIN images ON models.id_model = images.id_model WHERE 1 GROUP BY models.id_model', (err, rows) => {
+      connection.query('SELECT models.id_model, MAX(models.name) AS name, MAX(models.kind) AS kind, MAX(models.type) AS type, MAX(models.price) AS price, MAX(models.discount) AS discount, MAX(images.image) AS image FROM (models INNER JOIN images ON models.id_model = images.id_model) INNER JOIN items ON models.id_model = items.id_model ' + filter + 'GROUP BY models.id_model', (err, rows) => {
         if(err) {
           return(reject);
         } else {
@@ -33,6 +30,7 @@ app.get('/selectModels', async (req, res, next) => {
     })
   }
   let result = await modelsData.arr();
+  console.log(filter);
   res.json(result);
 });
 

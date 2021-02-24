@@ -30,9 +30,10 @@ function Searchpage(props) {
     const [allColors, setAllColors] = useState([]);
     const [allSizes, setAllSizes] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [filter, setFilter] = useState('');
     
     useEffect(() => {
-        props.getAllModels('1');
+        props.getAllModels(filter);
         props.getAllTypes();
         props.getAllColors();
         props.getAllSizes();
@@ -40,12 +41,13 @@ function Searchpage(props) {
         setAllTypes(props.modelsdata.types);
         setAllColors(props.itemsdata.colors);
         setAllSizes(props.itemsdata.sizes);
-        if (reloader < 10){
+        if (reloader < 5){
             setTimeout(() => {
                 setReloader(reloader + 1);
-            }, 200);
+            }, 500);
         }
-    }, [reloader]);
+        
+    }, [reloader, filter]);
 
     let pagesAr = [];
     let items = [];
@@ -57,6 +59,17 @@ function Searchpage(props) {
 
     const updateCurrentPage = (value) => {
         setCurrentPage(value);
+    }
+
+    const updateColorFilter = (value) => {
+        let res;
+        if (filter == ''){
+            res = filter + 'WHERE items.color = \''+ value +'\' '
+        }else{
+            res = filter + 'OR items.color = \''+ value +'\' '
+        }
+        setFilter(res);
+        setReloader(0);
     }
 
     if (allItems.length > 0){
@@ -75,7 +88,7 @@ function Searchpage(props) {
         pageElements = pagesAr.map(p => <Circlebutton caption={p} value={p} onClick={updateCurrentPage} key={p} />);
         typeElements = allTypes.map(t => <p className={css.groupposition}>{t.type}</p>);
         sizeElements = allSizes.map(s => <Checkbox name="size" caption={s.size} value={s.size}/>);
-        colorElements = allColors.map(c => <Colorprobe color={c.color} name="color" key={c.color} />);
+        colorElements = allColors.map(c => <Colorprobe color={c.color} name="color" key={c.color} onChange={updateColorFilter} />);
     }
 
     return(

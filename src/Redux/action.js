@@ -1,12 +1,26 @@
 import axios from "axios";
-import { GETALLMODELS, GETALLCOLORS, GETALLSIZES } from "./types";
+import { GETALLMODELS, GETALLTYPES, GETALLCOLORS, GETALLSIZES } from "./types";
 
-export const getAllModels = () => {
+export const getAllModels = (reqTypeFilter, reqSizeFilter, reqColorFilter) => {
     return async dispatch => {
-        const response = await axios.get("/selectModels");
+        const response = await axios.get("/selectModels", {
+            typeFilter: reqTypeFilter,
+            sizeFilter: reqSizeFilter,
+            colorFilter: reqColorFilter
+        });
         
         dispatch({
             type: GETALLMODELS, payload: response.data
+        });
+    }
+}
+
+export const getAllTypes = () => {
+    return async dispatch => {
+        const response = await axios.get("/selectTypes");
+        
+        dispatch({
+            type: GETALLTYPES, payload: response.data
         });
     }
 }

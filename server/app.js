@@ -1,30 +1,57 @@
 const express = require('express');
 const mysql = require('mysql2');
 const app = express();
+const bodyParser = require('body-parser')
 
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "kalinka",
-    password: ""
+  host: "localhost",
+  user: "root",
+  database: "kalinka",
+  password: ""
 });
-  
+
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.get('/selectModels', async (req, res, next) => {
-    let modelsData = {};
-  
-    modelsData.arr = () => {
-      return new Promise((resolve, reject) => {
-        connection.query('SELECT models.id_model, MAX(models.name) AS name, MAX(models.kind) AS kind, MAX(models.type) AS type, MAX(models.price) AS price, MAX(models.discount) AS discount, MAX(images.image) AS image FROM models INNER JOIN images ON models.id_model = images.id_model GROUP BY models.id_model', (err, rows) => {
-          if(err) {
-            return(reject);
-          } else {
-            return resolve(rows);
-          }
-        })
+  const types = req.body.typeFilter;
+  const sizes = req.body.sizeFilter;
+  const colors = req.body.colorFilter;
+  console.log(req.body);
+  let modelsData = {};
+
+  modelsData.arr = () => {
+    return new Promise((resolve, reject) => {
+      //'+ types + sizes + colors +'
+      connection.query('SELECT models.id_model, MAX(models.name) AS name, MAX(models.kind) AS kind, MAX(models.type) AS type, MAX(models.price) AS price, MAX(models.discount) AS discount, MAX(images.image) AS image FROM models INNER JOIN images ON models.id_model = images.id_model WHERE 1 GROUP BY models.id_model', (err, rows) => {
+        if(err) {
+          return(reject);
+        } else {
+          return resolve(rows);
+        }
       })
-    }
-    let result = await modelsData.arr();
-    res.json(result);
+    })
+  }
+  let result = await modelsData.arr();
+  res.json(result);
+});
+
+app.get('/selectTypes', async (req, res, next) => {
+  let modelsData = {};
+
+  modelsData.arr = () => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT models.type AS type FROM models GROUP BY models.type', (err, rows) => {
+        if(err) {
+          return(reject);
+        } else {
+          return resolve(rows);
+        }
+      })
+    })
+  }
+  let result = await modelsData.arr();
+  res.json(result);
 });
 
 app.get('/selectColors', async (req, res, next) => {

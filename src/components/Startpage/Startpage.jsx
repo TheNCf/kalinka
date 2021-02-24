@@ -2,7 +2,7 @@ import React from 'react';
 
 import css from './Startpage.module.css';
 
-import Arrowbutton from '../UI Elements/Circlebutton/Circlebutton';
+import Circlebutton from '../UI Elements/Circlebutton/Circlebutton';
 import Itemcard from '../UI Elements/Itemcard/Itemcard';
 
 import arrowleft from './../../img/goleftcl.png';
@@ -31,23 +31,15 @@ function Startpage() {
         <div className="container">
             <div className={css.group}>
                 <h1>Распродажа</h1>
-                <div className={css.itemcardsinline}>
-                    <Arrowbutton img={arrowleft} alt="arrowleft" margin="0px" />
-                    <div className={css.items}>
-                        {discountElements}
-                    </div>
-                    <Arrowbutton img={arrowright} alt="arrowright" margin="0px" />
+                <div className={css.items}>
+                    {discountElements}
                 </div>
             </div>
 
             <div className={css.group}>
                 <h1>Новинки</h1>
-                <div className={css.itemcardsinline}>
-                    <Arrowbutton img={arrowleft} alt="arrowleft" margin="0px" />
-                    <div className={css.items}>
-                        {newElements}
-                    </div>
-                    <Arrowbutton img={arrowright} alt="arrowright" margin="0px" />
+                <div className={css.items}>
+                    {newElements}
                 </div>
             </div>
         </div>

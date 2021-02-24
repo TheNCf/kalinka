@@ -5,16 +5,10 @@
 
 .searchbar{
     width: 255px;
+    padding: 1px 0px;
+    margin-right: 60px;
     border-radius: 20px;
     background: #444444;
-    padding: 0px;
-}
-
-.searchbarcontainer{
-    font-size: 0px;
-    margin: 0px;
-    margin-right: 60px;
-    padding: 0px;
 }
 
 .listofcontents{
@@ -37,17 +31,14 @@
 }
 
 .groupname{
-    margin: 0px;
+    margin: 10px 0px 10px 10px;
     padding: 0px;
-    margin-left: 10px;
-    padding-top: 25px;
-    margin-bottom: 5px;
     color: #FFFFFF;
     font-size: 28px;
 }
 
 .group{
-    margin-left: 20px;
+    margin: 10px 0px 10px 20px;
 }
 
 .groupposition{

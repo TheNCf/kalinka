@@ -10,18 +10,6 @@ import Circlebutton from "../UI Elements/Circlebutton/Circlebutton";
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { getAllModels, getAllTypes, getAllColors, getAllSizes } from '../../Redux/action';
 
-let positions = [
-    'Блузки',
-    'Жакеты',
-    'Костюмы',
-    'Юбки',
-    'Брюки',
-    'Платья',
-    'Сарафаны',
-    'Куртки',
-    'Пальто'
-];
-
 function Searchpage(props) {
     let itemsPerPage = 4;
     const [reloader, setReloader] = useState(0);

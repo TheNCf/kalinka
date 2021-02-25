@@ -18,6 +18,7 @@ function Filterbar(props) {
     let typeElements;
     let sizeElements;
     let colorElements;
+    let tempFilter = '';
 
     useEffect(() => {
         if (downloadData){
@@ -39,17 +40,21 @@ function Filterbar(props) {
 
     const updateFilter = (value) => {
         let res;
-        if (filter == ''){
-            res = filter + 'WHERE items.color = \''+ value +'\' '
-        }else{
-            res = filter + 'OR items.color = \''+ value +'\' '
+        if (value != ''){
+            if (tempFilter == ''){
+                res = tempFilter + 'WHERE items.color = \''+ value +'\' '
+            }else{
+                res = tempFilter + 'OR items.color = \''+ value +'\' '
+            }
+            tempFilter = res;
         }
-        setFilter(res);
     }
 
     typeElements = allTypes.map(t => <p className={css.groupposition}>{t.type}</p>);
     sizeElements = allSizes.map(s => <Checkbox name="size" caption={s.size} value={s.size}/>);
-    colorElements = allColors.map(c => <Colorprobe color={c.color} name="color" key={c.color} onChange={updateFilter} />);
+    colorElements = allColors.map(c => <Colorprobe color={c.color} name="color" key={c.color} updateFilter={updateFilter} />);
+
+    //setFilter(tempFilter);
 
     return(
         <div className={css.searchbar}>

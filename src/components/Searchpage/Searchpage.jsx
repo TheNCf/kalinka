@@ -27,7 +27,6 @@ function Searchpage(props) {
 
     useEffect(() => {
         setAllItems(props.modelsdata.models);
-        console.log("test");
     }, [props.modelsdata]);
 
     let pagesAr = [];

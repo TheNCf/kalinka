@@ -7,7 +7,7 @@ import Colorprobe from "../UI Elements/Colorprobe/Colorprobe";
 import Itemcard from "../UI Elements/Itemcard/Itemcard";
 import Circlebutton from "../UI Elements/Circlebutton/Circlebutton";
 
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { getAllModels, getAllTypes, getAllColors, getAllSizes } from '../../Redux/action';
 
 function Searchpage(props) {

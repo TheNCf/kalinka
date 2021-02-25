@@ -13,25 +13,29 @@ function Filterbar(props) {
     const [allColors, setAllColors] = useState([]);
     const [allSizes, setAllSizes] = useState([]);
     const [filter, setFilter] = useState('');
-    const [reloader, setReloader] = useState(0);
+    const [downloadData, setDownloadData] = useState(true);
 
     let typeElements;
     let sizeElements;
     let colorElements;
 
     useEffect(() => {
-        props.getAllTypes();
-        props.getAllColors();
-        props.getAllSizes();
+        if (downloadData){
+            props.getAllTypes();
+            props.getAllColors();
+            props.getAllSizes();
+        }
+    }, [downloadData]);
+
+    useEffect(() => {
         setAllTypes(props.modelsdata.types);
         setAllColors(props.itemsdata.colors);
         setAllSizes(props.itemsdata.sizes);
-        if (reloader < 5){
-            setTimeout(() => {
-                setReloader(reloader + 1);
-            }, 200);
-        }
-    }, [reloader]);
+    }, [props.modelsdata, props.itemsdata]);
+
+    useEffect(() => {
+        props.getFilter(filter);
+    }, [filter]);
 
     const updateFilter = (value) => {
         let res;

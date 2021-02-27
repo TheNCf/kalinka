@@ -5,7 +5,7 @@ import css from './Checkbox.module.css';
 function Checkbox(props){
     return(
         <label className={css.container}>
-            <input className={css.checkbox} type="checkbox" name={props.name} value={props.value} onChange={(e) => {props.updateSizeFilter(e)}} /> 
+            <input className={css.checkbox} type="checkbox" name={props.name} value={props.value} onChange={(e) => {props.onChange(e)}} /> 
             <span className={css.checkmark}></span> {props.caption}
         </label>
     );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import css from './Filterbar.module.css';
 
+import Groupposition from "./Groupposition/Groupposition"
 import Checkbox from "../../UI Elements/Checkbox/Checkbox";
 import Colorprobe from "../../UI Elements/Colorprobe/Colorprobe";
 
@@ -16,6 +17,7 @@ function Filterbar(props) {
     const [typeFilter, setTypeFilter] = useState('');
     const [sizeFilter, setSizeFilter] = useState('');
     const [colorFilter, setColorFilter] = useState('');
+    const [activeType, setActiveType] = useState('');
     const [sizeArrayState, setSizeArrayState] = useState([]);
     const [colorArrayState, setColorArrayState] = useState([]);
 
@@ -40,15 +42,29 @@ function Filterbar(props) {
     }, [props.modelsdata, props.itemsdata]);
 
     useEffect(() => {
+        let tempType = typeFilter;
         let tempSize = sizeFilter;
         let tempColor = colorFilter;
-        if (tempSize.length > 6 && tempColor.slice(0, 5) == 'WHERE') {
-            tempSize = tempSize.slice(0, 6) + '(' + tempSize.slice(6, tempSize.length - 1) + ')';
-            tempColor = 'AND (' + tempColor.slice(6, tempColor.length - 1) + ')';
+        if (tempType.length > 0) {
+            if (tempSize.slice(0, 5) == 'WHERE') {
+                tempSize = 'AND (' + tempSize.slice(6, tempSize.length - 1) + ') ';
+            }
+            if (tempColor.slice(0, 5) == 'WHERE') {
+                tempColor = 'AND (' + tempColor.slice(6, tempColor.length - 1) + ') ';
+            }
         }
-        props.getFilter(tempSize + tempColor);
-        console.log(tempSize + tempColor);
-    }, [sizeFilter, colorFilter]);
+        else if (tempSize.length > 6 && tempColor.slice(0, 5) == 'WHERE') {
+            tempSize = tempSize.slice(0, 6) + '(' + tempSize.slice(6, tempSize.length - 1) + ')';
+            tempColor = 'AND (' + tempColor.slice(6, tempColor.length - 1) + ') ';
+        }
+        props.getFilter(tempType + tempSize + tempColor);
+        console.log(tempType + tempSize + tempColor);
+    }, [typeFilter, sizeFilter, colorFilter]);
+
+    const updateTypeFilter = (value) => {
+        setActiveType(value);
+        setTypeFilter('WHERE models.type = \'' + value + '\' ');
+    }
 
     const updateSizeFilter = (e) => {
         let tempFilter = '';
@@ -88,9 +104,9 @@ function Filterbar(props) {
         setColorFilter(tempFilter);
     }
 
-    typeElements = allTypes.map(t => <p className={css.groupposition}>{t.type}</p>);
-    sizeElements = allSizes.map(s => <Checkbox name="size" caption={s.size} value={s.size} updateSizeFilter={updateSizeFilter} />);
-    colorElements = allColors.map(c => <Colorprobe color={c.color} name="color" key={c.color} updateColorFilter={updateColorFilter} />);
+    typeElements = allTypes.map(t => <Groupposition caption={t.type} active={activeType} onClick={updateTypeFilter} />);
+    sizeElements = allSizes.map(s => <Checkbox name="size" caption={s.size} value={s.size} onChange={updateSizeFilter} />);
+    colorElements = allColors.map(c => <Colorprobe color={c.color} name="color" key={c.color} onChange={updateColorFilter} />);
 
     return(
         <div className={css.searchbar}>

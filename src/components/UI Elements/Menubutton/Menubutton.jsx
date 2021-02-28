@@ -12,7 +12,7 @@ function Menubutton(props) {
         );
     }
     return(
-        <div className={css.menubutton}>
+        <div className={css.menubutton} onClick={() => {props.onClick(props.caption)}} >
             {image}
             <p className={css.caption} style={{fontSize: props.fontsize}}>{props.caption}</p>
         </div>

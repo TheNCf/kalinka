@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import css from './Filterbar.module.css';
 
+import Groupheader from "./Groupheader/Groupheader";
 import Groupposition from "./Groupposition/Groupposition"
 import Checkbox from "../../UI Elements/Checkbox/Checkbox";
 import Colorprobe from "../../UI Elements/Colorprobe/Colorprobe";
@@ -42,28 +43,28 @@ function Filterbar(props) {
     }, [props.modelsdata, props.itemsdata]);
 
     useEffect(() => {
+        let tempKind = 'WHERE models.kind = \'' + props.kind + '\' ' ;
         let tempType = typeFilter;
         let tempSize = sizeFilter;
         let tempColor = colorFilter;
-        if (tempType.length > 0) {
-            if (tempSize.slice(0, 5) == 'WHERE') {
-                tempSize = 'AND (' + tempSize.slice(6, tempSize.length - 1) + ') ';
-            }
-            if (tempColor.slice(0, 5) == 'WHERE') {
-                tempColor = 'AND (' + tempColor.slice(6, tempColor.length - 1) + ') ';
-            }
+        if (tempSize.length > 0) {
+            tempSize = 'AND (' + tempSize + ') ';
         }
-        else if (tempSize.length > 6 && tempColor.slice(0, 5) == 'WHERE') {
-            tempSize = tempSize.slice(0, 6) + '(' + tempSize.slice(6, tempSize.length - 1) + ')';
-            tempColor = 'AND (' + tempColor.slice(6, tempColor.length - 1) + ') ';
+        if (tempColor.length > 0) {
+            tempColor = 'AND (' + tempColor + ') ';
         }
-        props.getFilter(tempType + tempSize + tempColor);
-        console.log(tempType + tempSize + tempColor);
+        props.getFilter(tempKind + tempType + tempSize + tempColor);
+        console.log(tempKind + tempType + tempSize + tempColor);
+        console.log(tempSize);
     }, [typeFilter, sizeFilter, colorFilter]);
 
     const updateTypeFilter = (value) => {
         setActiveType(value);
-        setTypeFilter('WHERE models.type = \'' + value + '\' ');
+        if (value != '') {
+            setTypeFilter('AND models.type = \'' + value + '\' ');
+        } else {
+            setTypeFilter('');
+        }
     }
 
     const updateSizeFilter = (e) => {
@@ -77,7 +78,7 @@ function Filterbar(props) {
         setSizeArrayState(sizeArray);
         for(let i = 0; i < sizeArray.length; i++){
             if (i == 0) {
-                tempFilter += 'WHERE items.size = \''+ sizeArray[i] +'\' '
+                tempFilter += 'items.size = \''+ sizeArray[i] +'\' '
             }else{
                 tempFilter += 'OR items.size = \''+ sizeArray[i] +'\' '
             }
@@ -96,7 +97,7 @@ function Filterbar(props) {
         setColorArrayState(colorArray);
         for(let i = 0; i < colorArray.length; i++){
             if (i == 0) {
-                tempFilter += 'WHERE items.color = \''+ colorArray[i] +'\' '
+                tempFilter += 'items.color = \''+ colorArray[i] +'\' '
             }else{
                 tempFilter += 'OR items.color = \''+ colorArray[i] +'\' '
             }
@@ -110,7 +111,7 @@ function Filterbar(props) {
 
     return(
         <div className={css.searchbar}>
-            <h1 className={css.groupname}>Женская одежда</h1>
+            <Groupheader caption={props.kind} active={activeType} onClick={updateTypeFilter} />
             <div className={css.group}>
                 {typeElements}
             </div>

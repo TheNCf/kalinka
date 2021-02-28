@@ -62,7 +62,7 @@ function Searchpage(props) {
     return(
         <div className={css.content + " container"}>
             <div>
-                <Filterbar getFilter={getFilter} />
+                <Filterbar getFilter={getFilter} kind={props.kind} />
             </div>
             <div className={css.listofcontents}>
                 <div className={css.listofcontentscontainer}>

@@ -17,17 +17,23 @@ function Searchpage(props) {
     const [allItems, setAllItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [filter, setFilter] = useState('');
-    
-    useEffect(() => {
-        if (downloadData){
-            props.getAllModels(filter);
-            setDownloadData(false);
-        }
-    }, [downloadData]);
 
     useEffect(() => {
         setAllItems(props.modelsdata.models);
     }, [props.modelsdata]);
+
+    useEffect(() => {
+        setAllItems([]);
+        setDownloadData(true);
+    }, [props.kind]);
+
+    useEffect(() => {
+        if (downloadData){
+            props.getAllModels('WHERE models.kind = \'' + props.kind + '\' ' + filter);
+            setCurrentPage(1);
+            setDownloadData(false);
+        }
+    }, [downloadData]);
 
     let pagesAr = [];
     let items = [];

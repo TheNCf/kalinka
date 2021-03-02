@@ -31,16 +31,18 @@ app.post('/selectModels', async (req, res, next) => {
     })
   }
   let result = await modelsData.arr();
-  console.log(filter);
+  console.log('Select query: ' + sql);
+  console.log('Filter: ' + filter);
   res.json(result);
 });
 
-app.get('/selectTypes', async (req, res, next) => {
+app.post('/selectTypes', async (req, res, next) => {
+  const kind = req.body.kind;
   let modelsData = {};
 
   modelsData.arr = () => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT models.type AS type FROM models GROUP BY models.type', (err, rows) => {
+      connection.query('SELECT models.type AS type FROM models ' + kind + ' GROUP BY models.type', (err, rows) => {
         if(err) {
           return(reject);
         } else {
@@ -53,12 +55,13 @@ app.get('/selectTypes', async (req, res, next) => {
   res.json(result);
 });
 
-app.get('/selectColors', async (req, res, next) => {
+app.post('/selectColors', async (req, res, next) => {
+  const kind = req.body.kind;
   let itemsData = {};
 
   itemsData.arr = () => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT items.color AS color FROM models INNER JOIN items ON models.id_model = items.id_model GROUP BY items.color', (err, rows) => {
+      connection.query('SELECT items.color AS color FROM models INNER JOIN items ON models.id_model = items.id_model ' + kind + ' GROUP BY items.color', (err, rows) => {
         if(err) {
           return(reject);
         } else {
@@ -71,12 +74,13 @@ app.get('/selectColors', async (req, res, next) => {
   res.json(result);
 });
 
-app.get('/selectSizes', async (req, res, next) => {
+app.post('/selectSizes', async (req, res, next) => {
+  const kind = req.body.kind;
   let itemsData = {};
 
   itemsData.arr = () => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT items.size AS size FROM models INNER JOIN items ON models.id_model = items.id_model GROUP BY items.size', (err, rows) => {
+      connection.query('SELECT items.size AS size FROM models INNER JOIN items ON models.id_model = items.id_model ' + kind + ' GROUP BY items.size', (err, rows) => {
         if(err) {
           return(reject);
         } else {

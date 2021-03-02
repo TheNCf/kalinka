@@ -13,9 +13,11 @@ export const getAllModels = (reqFilter) => {
     }
 }
 
-export const getAllTypes = () => {
+export const getAllTypes = (reqKind) => {
     return async dispatch => {
-        const response = await axios.get("/selectTypes");
+        const response = await axios.post("/selectTypes", {
+            kind: reqKind,
+        });
         
         dispatch({
             type: GETALLTYPES, payload: response.data
@@ -23,9 +25,11 @@ export const getAllTypes = () => {
     }
 }
 
-export const getAllColors = () => {
+export const getAllColors = (reqKind) => {
     return async dispatch => {
-        const response = await axios.get("/selectColors");
+        const response = await axios.post("/selectColors", {
+            kind: reqKind,
+        });
         
         dispatch({
             type: GETALLCOLORS, payload: response.data
@@ -33,9 +37,11 @@ export const getAllColors = () => {
     }
 }
 
-export const getAllSizes = () => {
+export const getAllSizes = (reqKind) => {
     return async dispatch => {
-        const response = await axios.get("/selectSizes");
+        const response = await axios.post("/selectSizes", {
+            kind: reqKind,
+        });
         
         dispatch({
             type: GETALLSIZES, payload: response.data

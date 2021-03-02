@@ -17,9 +17,9 @@ function Header(props) {
                 <NavLink to="/" className="menulink"><img className={css.logo} src={logo} alt="Logo" /></NavLink>
                 <ul className={css.menulist}>
                     <li><NavLink to="/search"  className="menulink"><Menubutton caption="Женская одежда" onClick={props.getKind} /></NavLink></li>
-                    <li><Menubutton caption="Детская одежда" onClick={props.getKind} /></li>
-                    <li><Menubutton caption="Школьная одежда" onClick={props.getKind} /></li>
-                    <li><Menubutton caption="Контакты" onClick={props.getKind} /></li>
+                    <li><NavLink to="/search"  className="menulink"><Menubutton caption="Детская одежда" onClick={props.getKind} /></NavLink></li>
+                    <li><NavLink to="/search"  className="menulink"><Menubutton caption="Школьная одежда" onClick={props.getKind} /></NavLink></li>
+                    <li><NavLink to="/search"  className="menulink"><Menubutton caption="Контакты" onClick={props.getKind} /></NavLink></li>
                 </ul>
                 <div style={{marginLeft: 'auto'}}><NavLink to="/cart" className="menulink"><Menubutton caption="3" img={cart} /></NavLink></div>
             </nav>

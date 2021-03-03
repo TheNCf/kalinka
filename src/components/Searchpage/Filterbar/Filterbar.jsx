@@ -29,19 +29,6 @@ function Filterbar(props) {
     let colorArray = [];
 
     useEffect(() => {
-        if (downloadData){
-            let kind = 'WHERE models.kind = \'' + props.kind + '\' ';
-            props.getAllTypes(kind);
-            props.getAllColors(kind);
-            props.getAllSizes(kind);
-            setTypeFilter('');
-            setSizeFilter('');
-            setColorFilter('');
-            setActiveType('');
-        }
-    }, [downloadData, props.kind]);
-
-    useEffect(() => {
         setAllTypes(props.modelsdata.types);
         setAllColors(props.itemsdata.colors);
         setAllSizes(props.itemsdata.sizes);
@@ -58,8 +45,23 @@ function Filterbar(props) {
             tempColor = 'AND (' + tempColor + ') ';
         }
         props.getFilter(tempType + tempSize + tempColor);
-        console.log(tempType + tempSize + tempColor);
-    }, [typeFilter, sizeFilter, colorFilter]);
+    }, [typeFilter, sizeFilter, colorFilter, props.kind]);
+
+    useEffect(() => {
+        updateTypeFilter('');
+        setSizeFilter('');
+        setColorFilter('');
+        setActiveType('');
+    }, [props.kind]);
+
+    useEffect(() => {
+        //if (downloadData){
+            let kind = 'WHERE models.kind = \'' + props.kind + '\' ';
+            props.getAllTypes(kind);
+            props.getAllColors(kind);
+            props.getAllSizes(kind);
+        //}
+    }, [downloadData, props.kind]);
 
     const updateTypeFilter = (value) => {
         setActiveType(value);

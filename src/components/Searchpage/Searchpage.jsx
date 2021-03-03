@@ -13,7 +13,6 @@ import { getAllModels, getAllTypes, getAllColors, getAllSizes } from '../../Redu
 
 function Searchpage(props) {
     let itemsPerPage = 4;
-    const [downloadData, setDownloadData] = useState(true);
     const [allItems, setAllItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [filter, setFilter] = useState('');
@@ -24,16 +23,12 @@ function Searchpage(props) {
 
     useEffect(() => {
         setAllItems([]);
-        setDownloadData(true);
     }, [props.kind]);
 
     useEffect(() => {
-        if (downloadData){
-            props.getAllModels('WHERE models.kind = \'' + props.kind + '\' ' + filter);
-            setCurrentPage(1);
-            setDownloadData(false);
-        }
-    }, [downloadData]);
+        props.getAllModels('WHERE models.kind = \'' + props.kind + '\' ' + filter);
+        setCurrentPage(1);
+    }, [filter, props.kind]);
 
     let pagesAr = [];
     let items = [];
@@ -46,7 +41,6 @@ function Searchpage(props) {
 
     const getFilter = (newfilter) => {
         setFilter(newfilter);
-        setDownloadData(true);
     }
 
     if (allItems.length > 0){

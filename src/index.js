@@ -5,7 +5,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import App from './App';
-import { getAllModels, getAllColors, getAllSizes } from './Redux/action';
+import { getAllModels, getAllColors } from './Redux/action';
 import { rootReducer } from './Redux/rootReducer';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

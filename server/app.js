@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.post('/selectModels', async (req, res, next) => {
   const filter = req.body.filter;
   let modelsData = {};
-  let sql = 'SELECT models.id_model, MAX(models.name) AS name, MAX(models.kind) AS kind, MAX(models.price) AS price, MAX(models.discount) AS discount, MAX(images.image) AS image FROM (models INNER JOIN images ON models.id_model = images.id_model) INNER JOIN items ON models.id_model = items.id_model ' + filter + 'GROUP BY models.id_model';
+  let sql = 'SELECT models.id_model, MAX(models.name) AS name, MAX(models.kind) AS kind, MAX(models.type) AS \'type\', MAX(models.price) AS price, MAX(models.discount) AS discount, MAX(images.image) AS image FROM (models INNER JOIN images ON models.id_model = images.id_model) INNER JOIN items ON models.id_model = items.id_model ' + filter + 'GROUP BY models.id_model';
   modelsData.arr = () => {
     return new Promise((resolve, reject) => {
       connection.query(sql, (err, rows) => {
@@ -31,8 +31,6 @@ app.post('/selectModels', async (req, res, next) => {
     })
   }
   let result = await modelsData.arr();
-  console.log('Select query: ' + sql);
-  console.log('Filter: ' + filter);
   res.json(result);
 });
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GETALLMODELS, GETALLTYPES, GETALLCOLORS, GETALLSIZES } from "./types";
+import { GETALLMODELS, GETALLTYPES, GETALLCOLORS, GETALLSIZES} from "./types";
 
 export const getAllModels = (reqFilter) => {
     return async dispatch => {

@@ -9,7 +9,7 @@ import Itemcard from "../UI Elements/Itemcard/Itemcard";
 import Circlebutton from "../UI Elements/Circlebutton/Circlebutton";
 
 import { connect } from 'react-redux';
-import { getAllModels, getAllTypes, getAllColors, getAllSizes } from '../../Redux/action';
+import { getAllModels } from '../../Redux/action';
 
 function Searchpage(props) {
     let itemsPerPage = 4;
@@ -55,7 +55,7 @@ function Searchpage(props) {
                 items.push(allItems[i]);
             }
         }
-        itemElements = items.map(i => <Itemcard itemname={i.name} price={i.price + " руб."} discount={i.discount} img={'data:image/jpg;base64,' + btoa(Array.from(new Uint8Array(i.image.data)).map(b => String.fromCharCode(b)).join(''))} margin="0 0 10px 0" key={i.name + i.price + i.discount} />);
+        itemElements = items.map(i => <Itemcard id={i.id_model} itemname={i.name} price={i.price + " руб."} discount={i.discount} img={'data:image/jpg;base64,' + btoa(Array.from(new Uint8Array(i.image.data)).map(b => String.fromCharCode(b)).join(''))} margin="0 0 10px 0" key={i.name + i.price + i.discount} />);
         pageElements = pagesAr.map(p => <Circlebutton caption={p} value={p} onClick={updateCurrentPage} key={p} />);
     }
 
@@ -77,6 +77,6 @@ function Searchpage(props) {
 }
 
 const mapStateToProps = (state) => state;
-const mapDispatchToProps = {getAllModels, getAllTypes, getAllColors, getAllSizes}
+const mapDispatchToProps = {getAllModels}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Searchpage);

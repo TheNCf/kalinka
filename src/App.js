@@ -12,8 +12,6 @@ import Radiobutton from './components/UI Elements/Radiobutton/Radiobutton';
 
 import {BrowserRouter, Route} from 'react-router-dom';
 
-import image from "./img/itemcards/Layout04Blouse.png";
-
 let radiocolors = (
   <div className="group">
     <Radiobutton color="#FFFFFF" name="colors" />
@@ -50,12 +48,9 @@ function App() {
           <Route exact path="/" render={() => <Startpage />} />
           <Route path="/search" render={() => <Searchpage kind={currentKind} />} />
           <Route path="/cart" render={() => <Cart />} />
-          
+          <Route path="/item" render={() => <Itemdescription radiocolors={radiocolors} sizes={sizes} />} />
           <Route path="/order" render={() => <Createorder />} />
         </div>
-        {/*
-        <Itemdescription itemname="Блузка женская" img={image} price="23.99" radiocolors={radiocolors} sizes={sizes} />
-        */}
         <Footer/>
       </div>
     </BrowserRouter>

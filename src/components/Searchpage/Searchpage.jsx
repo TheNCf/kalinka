@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import css from './Searchpage.module.css';
 
 import Filterbar from "./Filterbar/Filterbar";
-import Checkbox from "../UI Elements/Checkbox/Checkbox";
-import Colorprobe from "../UI Elements/Colorprobe/Colorprobe";
 import Itemcard from "../UI Elements/Itemcard/Itemcard";
 import Circlebutton from "../UI Elements/Circlebutton/Circlebutton";
 

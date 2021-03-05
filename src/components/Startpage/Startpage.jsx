@@ -2,11 +2,8 @@ import React from 'react';
 
 import css from './Startpage.module.css';
 
-import Circlebutton from '../UI Elements/Circlebutton/Circlebutton';
 import Itemcard from '../UI Elements/Itemcard/Itemcard';
 
-import arrowleft from './../../img/goleftcl.png';
-import arrowright from './../../img/gorightcl.png';
 import itemplaceholder from './../../img/itemcards/Layout04Blouse.png';
 
 let discounts = [

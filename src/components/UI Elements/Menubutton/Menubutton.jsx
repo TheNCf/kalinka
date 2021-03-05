@@ -2,8 +2,6 @@ import React from 'react';
 
 import css from './Menubutton.module.css';
 
-import {NavLink} from 'react-router-dom';
-
 function Menubutton(props) {
     var image;
     if(props.img != null){

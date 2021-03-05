@@ -41,10 +41,19 @@ function Itemdescription(props) {
 console.log(allColors);
     let item = itemInfo[0];
     let colorElements = allColors.map(c => <Radiobutton color={c.color} name="color" key={c.color} /*onChange={}*/ />);
-    let sizeElements = allSizes.map(s => <Radiobutton name="size" caption={s.size} fontcolor="#6A6A6A" /*onChange={}*/ />);
+    let sizeElements = allSizes.map(s => <Radiobutton name="size" caption={s.size} fontcolor="#444444" /*onChange={}*/ />);
 
     if (itemInfo.length > 0){
-    return(
+        let discountText = parseFloat(item.price).toFixed(2) + ' руб.';
+        if (item.discount > "0"){
+            let price = parseFloat(item.price).toFixed(2);
+            let newPrice = (price - price * parseFloat(item.discount) / 100).toFixed(2);
+            discountText = (
+                <div>
+                    <strike>{price}</strike> {newPrice} руб.
+                </div>);
+        }
+        return(
         <div className="container">
             <h1>{item.name}</h1>
             <div className={css.information}>
@@ -60,9 +69,8 @@ console.log(allColors);
                 </div>
                 <div className={css.description}>
                     <div className={css.price}>
-                        <h1 style={{marginLeft: 'auto'}}>{item.price.toFixed(2)} руб.</h1>
+                        <h1 style={{marginLeft: 'auto'}}>{discountText}</h1>
                     </div>
-
                     <h1 className={css.maintext}>Выберите цвет: </h1>
                     <div className={css.group}>{colorElements}</div>
 
@@ -71,17 +79,16 @@ console.log(allColors);
 
                     <h1 className={css.maintext}>Количество: </h1>
                     <div className={css.group}>
-                        <Circlebutton img={minus} margin="0px" size="35px" imgsize="50%" />
+                        <Circlebutton img={minus} margin="0px" size="36px" imgsize="50%" />
                         <h1 className={css.maintext} style={{margin: '0px 15px'}}>1</h1>
-                        <Circlebutton img={plus} margin="0px" size="35px" imgsize="50%" />
+                        <Circlebutton img={plus} margin="0px" size="36px" imgsize="50%" />
                     </div>
-
                     <div className={css.space}></div>
                     <div className={css.button}><Menubutton caption="Добавить в корзину" fontsize="26px" img={cart} /></div>
                 </div>
             </div>
-        </div>
-    );} else return (<h1>Загрузка...</h1>);
+        </div>);
+    } else return (<h1>Загрузка...</h1>);
 }
 
 const mapStateToProps = (state) => state;

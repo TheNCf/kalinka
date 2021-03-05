@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import css from './Circlebutton.module.css';
 
@@ -23,13 +23,11 @@ function Ciclebutton(props) {
         width: props.size
     }
 
-    const [value, setValue] = useState(props.value);
-
     return (
-        <button className={css.circlebutton} style={styleObj} value={props.value} onClick={() => {props.onClick(props.value)}}>
+        <div className={css.circlebutton} style={styleObj} onClick={() => {props.onClick(props.value)}}>
             {image}
             {text}
-        </button>
+        </div>
     );
 }
 

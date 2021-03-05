@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import css from './Startpage.module.css';
 
 import Itemcard from '../UI Elements/Itemcard/Itemcard';
 
 import itemplaceholder from './../../img/itemcards/Layout04Blouse.png';
+
+import { connect } from 'react-redux';
+import { getNewModels, getDiscountModels } from '../../Redux/action';
 
 let discounts = [
     {itemname: 'Блузка женская', price: '23.99', discount: '25', img: itemplaceholder},
@@ -20,10 +23,27 @@ let newItems = [
     {itemname: 'Блузка женская', price: '19.99', discount: '0', img: itemplaceholder}
 ];
 
-let discountElements = discounts.map( i => <Itemcard itemname={i.itemname} price={i.price + ' руб.'}  discount={i.discount} img={i.img} margin="0 5px" /> );
-let newElements = newItems.map( n => <Itemcard itemname={n.itemname} price={n.price + ' руб.'} discount={n.discount} img={n.img} margin="0 5px" /> );
+function Startpage(props) {
+    const [newModels, setNewModels] = useState([]);
+    const [discountModels, setDiscountModels] = useState([]);
+    const [downloadFlag, setDownloadFlag] = useState(true);
 
-function Startpage() {
+    useEffect(() => {
+        setNewModels(props.modelsdata.new);
+        setDiscountModels(props.modelsdata.discount);
+    }, [props.modelsdata, props.itemsdata]);
+
+    useEffect(() => {
+        if (downloadFlag == true) {
+            props.getNewModels();
+            props.getDiscountModels();
+        }
+        setDownloadFlag(false);
+    }, [downloadFlag]);
+
+    let newElements = newModels.map( n => <Itemcard id={n.id_model} itemname={n.name} price={n.price + ' руб.'} discount={n.discount} img={'data:image/jpg;base64,' + btoa(Array.from(new Uint8Array(n.image.data)).map(b => String.fromCharCode(b)).join(''))} /> );
+    let discountElements = discountModels.map( d => <Itemcard id={d.id_model} itemname={d.name} price={d.price + ' руб.'}  discount={d.discount} img={'data:image/jpg;base64,' + btoa(Array.from(new Uint8Array(d.image.data)).map(b => String.fromCharCode(b)).join(''))} /> );
+
     return (
         <div className="container">
             <div className={css.group}>
@@ -43,4 +63,7 @@ function Startpage() {
     );
 }
 
-export default Startpage;
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = {getNewModels, getDiscountModels}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Startpage);

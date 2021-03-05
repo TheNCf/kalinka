@@ -1,8 +1,10 @@
-import { GETALLMODELS, GETALLTYPES } from "./types";
+import { GETALLMODELS, GETALLTYPES, GETNEWMODELS, GETDISCOUNTMODELS } from "./types";
 
 const initialState = {
     models: [],
-    types: []
+    types: [],
+    new: [],
+    discount: []
 }
 
 export const modelsReducer = (state = initialState, action) => {
@@ -11,6 +13,10 @@ export const modelsReducer = (state = initialState, action) => {
             return {...state, models: action.payload}
         case GETALLTYPES: 
             return {...state, types: action.payload}
+        case GETNEWMODELS: 
+            return {...state, new: action.payload}
+        case GETDISCOUNTMODELS: 
+            return {...state, discount: action.payload}
         default:
             return state;
     }

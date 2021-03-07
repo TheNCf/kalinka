@@ -23,8 +23,19 @@ function Ciclebutton(props) {
         width: props.size
     }
 
+    const empty = (value) => {
+        let x = value;
+    }
+
+    let cssButton = css.circlebutton;
+    let onClck = props.onClick;
+    if (props.disabled == "disabled") {
+        cssButton = css.circlebuttondisabled;
+        onClck = empty;
+    }
+
     return (
-        <div className={css.circlebutton} style={styleObj} onClick={() => {props.onClick(props.value)}}>
+        <div className={cssButton} style={styleObj} onClick={() => {onClck(props.value)}}>
             {image}
             {text}
         </div>

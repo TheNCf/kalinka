@@ -130,3 +130,22 @@ app.get('/selectDiscountModels', async (req, res, next) => {
 app.listen(4000, () => {
     console.log('Server started.')
 });
+
+app.post('/selectItemCount', async (req, res, next) => {
+  const item = req.body.item;
+  let itemsData = {};
+
+  itemsData.arr = () => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT SUM(items.quantity) AS quantity FROM models INNER JOIN items ON models.id_model = items.id_model ' + item, (err, rows) => {
+        if(err) {
+          return(reject);
+        } else {
+          return resolve(rows);
+        }
+      })
+    })
+  }
+  let result = await itemsData.arr();
+  res.json(result);
+});

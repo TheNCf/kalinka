@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { getAllTypes, getAllColors, getAllSizes } from '../../../Redux/action';
 
 function Filterbar(props) {
-    const [downloadData, setDownloadData] = useState(true);
     const [allTypes, setAllTypes] = useState([]);
     const [allColors, setAllColors] = useState([]);
     const [allSizes, setAllSizes] = useState([]);
@@ -55,13 +54,11 @@ function Filterbar(props) {
     }, [props.kind]);
 
     useEffect(() => {
-        //if (downloadData){
-            let kind = 'WHERE models.kind = \'' + props.kind + '\' ';
-            props.getAllTypes(kind);
-            props.getAllColors(kind);
-            props.getAllSizes(kind);
-        //}
-    }, [downloadData, props.kind]);
+        let kind = 'WHERE models.kind = \'' + props.kind + '\' ';
+        props.getAllTypes(kind);
+        props.getAllColors(kind);
+        props.getAllSizes(kind);
+    }, [props.kind]);
 
     const updateTypeFilter = (value) => {
         setActiveType(value);

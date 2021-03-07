@@ -1,8 +1,9 @@
-import { GETALLCOLORS, GETALLSIZES } from "./types";
+import { GETALLCOLORS, GETALLSIZES, GETITEMCOUNT } from "./types";
 
 const initialState = {
     colors: [],
-    sizes: []
+    sizes: [],
+    count: []
 }
 
 export const itemsReducer = (state = initialState, action) => {
@@ -11,6 +12,8 @@ export const itemsReducer = (state = initialState, action) => {
             return {...state, colors: action.payload}
         case GETALLSIZES: 
             return {...state, sizes: action.payload}
+        case GETITEMCOUNT: 
+            return {...state, count: action.payload}
         default:
             return state;
     }

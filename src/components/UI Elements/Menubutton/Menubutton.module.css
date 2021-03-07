@@ -12,6 +12,16 @@
     align-items: center;
 }
 
+.menubuttondisabled{
+    transition: all 0.25s ease-in-out;
+    background-color: #6A6A6A;
+    border-radius: 20px;
+    padding: 1px 12px;
+    border: 2px solid #FFFFFF;
+    display: flex;
+    align-items: center;
+}
+
 .image{
     width: auto;
     height: 28px;

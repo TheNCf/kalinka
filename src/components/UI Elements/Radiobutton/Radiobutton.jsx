@@ -7,7 +7,7 @@ function Radiobutton(props) {
     var caption;
     if(props.caption == null){
         noncaption = (
-            <label className={css.container}>
+            <label className={css.container} onChange={() => {props.onChange(props.color)}}>
                 <input className={css.checkbox} type="radio" name={props.name} value={props.color} />
                 <span className={css.checkmark} style={{backgroundColor: props.color}}></span>
             </label>
@@ -15,12 +15,10 @@ function Radiobutton(props) {
     }
     else{
         caption = (
-            <label className={css.radiocontainer}>
+            <label className={css.radiocontainer} onChange={() => {props.onChange(props.caption)}}>
                 <input className={css.radio} type="radio" name={props.name} value={props.caption} />
                 <span className={css.caption} style={{color: props.fontcolor}}>{props.caption}</span>
-                <span className={css.radiomark} id={props.name + "id"}>
-                    
-                </span>
+                <span className={css.radiomark} id={props.name + "id"}></span>
             </label>
         );
     }

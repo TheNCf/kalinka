@@ -9,8 +9,19 @@ function Menubutton(props) {
             <img className={css.image} src={props.img} alt="Cart"/>
         );
     }
+
+    const empty = () => {
+        let x;
+    }
+
+    let cssButton = css.menubutton;
+    let onClck = props.onClick;
+    if (props.disabled == "disabled") { 
+        cssButton = css.menubuttondisabled;
+        onClck = empty;
+    }
     return(
-        <div className={css.menubutton} onClick={() => {props.onClick(props.caption)}} >
+        <div className={cssButton} onClick={() => {onClck(props.caption)}} >
             {image}
             <p className={css.caption} style={{fontSize: props.fontsize}}>{props.caption}</p>
         </div>

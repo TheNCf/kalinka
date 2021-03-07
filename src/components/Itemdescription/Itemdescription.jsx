@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Cookies from 'universal-cookie';
 
 import css from './Itemdescription.module.css';
 
@@ -11,23 +12,36 @@ import minus from "./../../img/Minus.png";
 import cart from './../../img/cart.png';
 
 import { connect } from 'react-redux';
-import { getAllModels, getAllColors, getAllSizes } from '../../Redux/action';
+import { getAllModels, getAllColors, getAllSizes, getItemCount } from '../../Redux/action';
 
 
 function Itemdescription(props) {
     let href = window.location.href;
     let id = href.slice(href.indexOf('/item/id') + 8, href.length);
+    const cookies = new Cookies();
 
     const [itemInfo, setItemInfo] = useState([]);
     const [allColors, setAllColors] = useState([]);
     const [allSizes, setAllSizes] = useState([]);
+    const [activeColor, setActiveColor] = useState('');
+    const [activeSize, setActiveSize] = useState('');
+    const [disabled, setDisabled] = useState('disabled');
+    const [count, setCount] = useState(0);
+    const [counter, setCounter] = useState(1);
     const [downloadFlag, setDownloadFlag] = useState(true);
     
     useEffect(() => {
         setItemInfo(props.modelsdata.models);
         setAllColors(props.itemsdata.colors);
         setAllSizes(props.itemsdata.sizes);
+        setCount(props.itemsdata.count);
     }, [props.modelsdata, props.itemsdata]);
+
+    useEffect(() => {
+        if (count.length > 0) {
+            setDisabled('');
+        } else setDisabled('disabled');
+    }, [count]);
 
     useEffect(() => {
         if (downloadFlag == true) {
@@ -38,10 +52,50 @@ function Itemdescription(props) {
         setDownloadFlag(false);
     }, [downloadFlag]);
 
-console.log(allColors);
+    useEffect(() => {
+        if (activeColor != '' && activeSize != ''){
+            props.getItemCount('WHERE items.color = \'' + activeColor + '\' AND items.size = \'' + activeSize + '\'');
+        } else setDisabled('disabled');
+    }, [activeColor, activeSize]);
+
+    const updateActiveColor = (value) => {
+        setActiveColor(value)
+    }
+    const updateActiveSize = (value) => {
+        setActiveSize(value)
+    }
+
+    const plusCounter = () => {
+        let temp = counter + 1;
+        if (temp > parseInt(count[0].quantity)) temp = parseInt(count[0].quantity);
+        setCounter(temp);
+    }
+    const minusCounter = () => {
+        let temp = counter - 1;
+        if (temp < 1) temp = 1;
+        setCounter(temp);
+    }
+
     let item = itemInfo[0];
-    let colorElements = allColors.map(c => <Radiobutton color={c.color} name="color" key={c.color} /*onChange={}*/ />);
-    let sizeElements = allSizes.map(s => <Radiobutton name="size" caption={s.size} fontcolor="#444444" /*onChange={}*/ />);
+    let colorElements = allColors.map(c => <Radiobutton color={c.color} name="color" key={c.color} onChange={updateActiveColor} />);
+    let sizeElements = allSizes.map(s => <Radiobutton name="size" caption={s.size} fontcolor="#444444" onChange={updateActiveSize} />);
+
+    const addCookie = () => {
+        let itemPrice = parseFloat(item.price).toFixed(2);
+        if (item.discount > "0") {
+            itemPrice = (itemPrice - itemPrice * parseFloat(item.discount) / 100).toFixed(2);
+        }
+        itemPrice = itemPrice * counter;
+        let itemObject = {
+            name: item.name,
+            price: itemPrice,
+            quantity: counter,
+            color: activeColor,
+            size: activeSize
+        }
+        cookies.set(id, itemObject, { path: '/' });
+        console.log(cookies.get(id));
+    }
 
     if (itemInfo.length > 0){
         let discountText = parseFloat(item.price).toFixed(2) + ' руб.';
@@ -79,12 +133,12 @@ console.log(allColors);
 
                     <h1 className={css.maintext}>Количество: </h1>
                     <div className={css.group}>
-                        <Circlebutton img={minus} margin="0px" size="36px" imgsize="50%" />
-                        <h1 className={css.maintext} style={{margin: '0px 15px'}}>1</h1>
-                        <Circlebutton img={plus} margin="0px" size="36px" imgsize="50%" />
+                        <Circlebutton img={minus} margin="0px" size="36px" imgsize="50%" disabled={disabled} onClick={minusCounter} />
+                        <h1 className={css.maintext} style={{margin: '0px 15px'}}>{counter}</h1>
+                        <Circlebutton img={plus} margin="0px" size="36px" imgsize="50%" disabled={disabled} onClick={plusCounter} />
                     </div>
                     <div className={css.space}></div>
-                    <div className={css.button}><Menubutton caption="Добавить в корзину" fontsize="26px" img={cart} /></div>
+                    <div className={css.button}><Menubutton caption="Добавить в корзину" fontsize="26px" img={cart} disabled={disabled} onClick={addCookie} /></div>
                 </div>
             </div>
         </div>);
@@ -92,6 +146,6 @@ console.log(allColors);
 }
 
 const mapStateToProps = (state) => state;
-const mapDispatchToProps = {getAllModels, getAllColors, getAllSizes}
+const mapDispatchToProps = {getAllModels, getAllColors, getAllSizes, getItemCount}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Itemdescription);

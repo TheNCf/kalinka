@@ -4,24 +4,8 @@ import css from './Startpage.module.css';
 
 import Itemcard from '../UI Elements/Itemcard/Itemcard';
 
-import itemplaceholder from './../../img/itemcards/Layout04Blouse.png';
-
 import { connect } from 'react-redux';
 import { getNewModels, getDiscountModels } from '../../Redux/action';
-
-let discounts = [
-    {itemname: 'Блузка женская', price: '23.99', discount: '25', img: itemplaceholder},
-    {itemname: 'Блузка женская', price: '13.99', discount: '20', img: itemplaceholder},
-    {itemname: 'Блузка женская', price: '20.99', discount: '20', img: itemplaceholder},
-    {itemname: 'Блузка женская', price: '19.99', discount: '15', img: itemplaceholder}
-];
-
-let newItems = [
-    {itemname: 'Блузка женская', price: '23.99', discount: '0', img: itemplaceholder},
-    {itemname: 'Блузка женская', price: '13.99', discount: '0', img: itemplaceholder},
-    {itemname: 'Блузка женская', price: '20.99', discount: '0', img: itemplaceholder},
-    {itemname: 'Блузка женская', price: '19.99', discount: '0', img: itemplaceholder}
-];
 
 function Startpage(props) {
     const [newModels, setNewModels] = useState([]);

@@ -12,6 +12,20 @@
     outline: none;
 }
 
+.circlebuttondisabled{
+    width: 50px; 
+    height: 50px;
+    background-color: #6A6A6A;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    margin-right: 20px;
+    display: flex;
+    transition: all 0.25s ease-in-out;
+    font-family: 'Segoe UI';
+    font-size: 24px;
+    outline: none;
+}
+
 .image{
     margin: auto;
     width: 100%; 

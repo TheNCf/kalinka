@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GETALLMODELS, GETALLTYPES, GETALLCOLORS, GETALLSIZES, GETNEWMODELS, GETDISCOUNTMODELS} from "./types";
+import { GETALLMODELS, GETALLTYPES, GETALLCOLORS, GETALLSIZES, GETNEWMODELS, GETDISCOUNTMODELS, GETITEMCOUNT} from "./types";
 
 export const getAllModels = (reqFilter) => {
     return async dispatch => {
@@ -65,6 +65,18 @@ export const getDiscountModels = () => {
         
         dispatch({
             type: GETDISCOUNTMODELS, payload: response.data
+        });
+    }
+}
+
+export const getItemCount = (reqItem) => {
+    return async dispatch => {
+        const response = await axios.post("/selectItemCount", {
+            item: reqItem,
+        });
+        
+        dispatch({
+            type: GETITEMCOUNT, payload: response.data
         });
     }
 }

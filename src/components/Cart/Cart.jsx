@@ -1,55 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Cookies from 'universal-cookie';
 
 import css from './Cart.module.css';
 
-import Cartitem from "../UI Elements/Cartitem/Cartitem";
-import Radiobutton from "../UI Elements/Radiobutton/Radiobutton";
+import Cartitem from "./Cartitem/Cartitem";
 import Menubutton from "../UI Elements/Menubutton/Menubutton";
 
 import {NavLink} from 'react-router-dom';
 
-import image from "./../../img/itemcards/Layout04Blouse.png";
-
-let itemColors = [
-    '#FFFFFF',
-    '#D8D8D8',
-    '#FFB6B6',
-    '#909090',
-    '#FFD3B0'
-];
-let itemSizes = [
-    '164-84-90',
-    '164-84-92',
-    '164-88-94',
-    '164-88-96',
-    '164-92-98'
-];
-
 function Cart() {
+    const cookies = new Cookies();
+    let allItems = cookies.getAll();
+    allItems = Object.values(allItems);
 
-    let colorElements = itemColors.map(c => <Radiobutton color={c} name="colors" />)
-    let sizeIElements = itemSizes.map(s =><Radiobutton caption={s} name="sizes" /> )
+    const [reload, setReload] = useState(false);
+    useEffect(() => {
+        setReload(false);
+    }, [reload])
+    const initReload = () => {
+        setReload(true);
+    }
 
-    var radiocolors = (
-        <div className={css.group}>
-            {colorElements}
-        </div>
-    );
-    var radios = (
-        <div className={css.group}>
-            {sizeIElements}
-        </div>
-    );
+    let sum = 0;
+    for (let i = 0; i < allItems.length; i++) {
+        sum += parseFloat(allItems[i].price)
+    }
+
+    let cartElements = allItems.map(c => <Cartitem alt="Item Picture" itemname={c.name} price={c.price} color={c.color} size={c.size} quantity={c.quantity} reload={initReload} id={c.id} />);
 
     return(
         <div className="container">
             <h1>Корзина</h1>
             <div className={css.cartitems}>
-                <Cartitem img={image} alt="Item Picture" itemname="Блузка женская" price="23.99" colors={radiocolors} radios={radios} />
-                <Cartitem img={image} alt="Item Picture" itemname="Юбка женская" price="23.99" colors={radiocolors} radios={radios} />
+                {cartElements}
             </div>
             <div className={css.cost}>
-                <h1>Сумма: 59.97 руб.</h1>
+                <h1>Сумма: {sum} руб.</h1>
                 <div style={{marginLeft: 'auto'}}><NavLink to="/order"><Menubutton caption="Оформить заказ" fontsize="26px" /></NavLink></div>
             </div>
         </div>

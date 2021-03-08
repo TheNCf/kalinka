@@ -87,14 +87,14 @@ function Itemdescription(props) {
         }
         itemPrice = itemPrice * counter;
         let itemObject = {
+            id: id,
             name: item.name,
             price: itemPrice,
             quantity: counter,
             color: activeColor,
-            size: activeSize
+            size: activeSize,
         }
         cookies.set(id, itemObject, { path: '/' });
-        console.log(cookies.get(id));
     }
 
     if (itemInfo.length > 0){

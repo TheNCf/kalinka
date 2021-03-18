@@ -20,6 +20,9 @@ function Menubutton(props) {
         cssButton = css.menubuttondisabled;
         onClck = empty;
     }
+    if (props.onClick == "") {
+        onClck = empty;
+    }
     return(
         <div className={cssButton} onClick={() => {onClck(props.caption)}} >
             {image}

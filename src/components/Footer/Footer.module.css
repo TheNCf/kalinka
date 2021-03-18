@@ -48,3 +48,14 @@
     font-weight: 400;
     color: #FFFFFF;
 }
+
+.link{
+    color: #FFFFFF;
+}
+
+.link:visited{
+    color: #FFFFFF;
+}
+.link:active{
+    color: #6A6A6A;
+}

@@ -6,6 +6,10 @@ import Textinput from '../UI Elements/Textinput/Textinput';
 import Menubutton from '../UI Elements/Menubutton/Menubutton';
 
 function Createorder(params) {
+    const onClick = () => {
+        alert("Заказ принят");
+    }
+
     return(
         <div className="container">
             <h1>Оформление заказа</h1>
@@ -17,7 +21,7 @@ function Createorder(params) {
                     <div className={css.element}><Textinput name="name" placeholder="Ваше имя..." /></div>
                     <h1 className={css.label}>Укажите удобное время для звонка:</h1>
                     <div className={css.element}><Textinput mask="с 99:99 до 99:99" name="time" maskchar=" " /></div>
-                    <div className={css.button}><Menubutton caption="Подтвердить" type="submit" name="submit" /></div>
+                    <div className={css.button}><Menubutton caption="Подтвердить" type="submit" name="submit" onClick={onClick} /></div>
                 </form>
             </div>
         </div>

@@ -95,6 +95,7 @@ function Itemdescription(props) {
             size: activeSize,
         }
         cookies.set(id, itemObject, { path: '/' });
+        alert('Товар добавлен в корзину.');
     }
 
     if (itemInfo.length > 0){

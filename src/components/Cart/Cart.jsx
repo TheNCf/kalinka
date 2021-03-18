@@ -27,19 +27,26 @@ function Cart() {
     }
 
     let cartElements = allItems.map(c => <Cartitem alt="Item Picture" itemname={c.name} price={c.price} color={c.color} size={c.size} quantity={c.quantity} reload={initReload} id={c.id} />);
-
-    return(
-        <div className="container">
-            <h1>Корзина</h1>
-            <div className={css.cartitems}>
-                {cartElements}
+    if (allItems.length > 0){
+        return(
+            <div className="container">
+                <h1>Корзина</h1>
+                <div className={css.cartitems}>
+                    {cartElements}
+                </div>
+                <div className={css.cost}>
+                    <h1>Сумма: {sum.toFixed(2)} руб.</h1>
+                    <div style={{marginLeft: 'auto'}}><NavLink to="/order"><Menubutton caption="Оформить заказ" fontsize="26px" onClick="" /></NavLink></div>
+                </div>
             </div>
-            <div className={css.cost}>
-                <h1>Сумма: {sum} руб.</h1>
-                <div style={{marginLeft: 'auto'}}><NavLink to="/order"><Menubutton caption="Оформить заказ" fontsize="26px" /></NavLink></div>
+        );
+    } else {
+        return(
+            <div className="container">
+                <h1>В корзине пусто...</h1>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default Cart;

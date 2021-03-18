@@ -127,10 +127,6 @@ app.get('/selectDiscountModels', async (req, res, next) => {
   res.json(result);
 });
 
-app.listen(4000, () => {
-    console.log('Server started.')
-});
-
 app.post('/selectItemCount', async (req, res, next) => {
   const item = req.body.item;
   let itemsData = {};
@@ -148,4 +144,27 @@ app.post('/selectItemCount', async (req, res, next) => {
   }
   let result = await itemsData.arr();
   res.json(result);
+});
+
+app.post('/addClientInfo', async (req, res) => {
+  const orderNumber = req.body.orderNumber;
+  const number = req.body.number;
+  const firstName = req.body.firstName;
+  const period = req.body.period;
+  connection.query(`INSERT INTO \`client_info\` (\`order_number\`, \`number\`, \`first_name\`, \`period\`) VALUES ('${orderNumber}', '${number}', '${firstName}', '${period}');`);
+  res.send();
+});
+
+app.post('/addOrderItem', async (req, res) => {
+  const orderNumber = req.body.orderNumber;
+  const idModel = req.body.idModel;
+  const quantity = req.body.quantity;
+  const size = req.body.size;
+  const color = req.body.color;
+  connection.query(`INSERT INTO \`orders\` (\`order_number\`, \`id_model\`, \`quantity\`, \`size\`, \`color\`) VALUES ('${orderNumber}', '${idModel}, '${quantity}, '${size}, '${color}'`);
+  res.send();
+});
+
+app.listen(4000, () => {
+  console.log('Server started.')
 });

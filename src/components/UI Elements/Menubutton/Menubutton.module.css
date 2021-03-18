@@ -23,6 +23,18 @@
     align-items: center;
 }
 
+.menubuttondisabled:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    z-index: 1;
+    background: rgba(255,255,230,0.8);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    border-radius: 3px;
+}
+
 .image{
     width: auto;
     height: 28px;

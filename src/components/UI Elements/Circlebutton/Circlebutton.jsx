@@ -35,7 +35,7 @@ function Ciclebutton(props) {
     }
 
     return (
-        <div className={cssButton} style={styleObj} onClick={() => {onClck(props.value)}}>
+        <div className={cssButton} style={styleObj} onClick={() => {onClck(props.value)}} data-title="Выберите размер и цвет товара" >
             {image}
             {text}
         </div>

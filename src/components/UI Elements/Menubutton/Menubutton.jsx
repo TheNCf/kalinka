@@ -24,7 +24,7 @@ function Menubutton(props) {
         onClck = empty;
     }
     return(
-        <div className={cssButton} onClick={() => {onClck(props.caption)}} >
+        <div className={cssButton} onClick={() => {onClck(props.caption)}} data-title="Выберите размер и цвет товара" >
             {image}
             <p className={css.caption} style={{fontSize: props.fontsize}}>{props.caption}</p>
         </div>

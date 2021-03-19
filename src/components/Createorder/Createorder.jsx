@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 import css from './Createorder.module.css';
 
 import Textinput from '../UI Elements/Textinput/Textinput';
 import Menubutton from '../UI Elements/Menubutton/Menubutton';
 
-function Createorder(params) {
+function Createorder(props) {
+    const cookies = new Cookies();
     const [number, setNumber] = useState('');
     const [name, setName] = useState('');
     const [period, setPeriod] = useState('');
@@ -17,7 +19,21 @@ function Createorder(params) {
             number: number,
             firstName: name,
             period: period
-        }); 
+        });
+
+        let allItems = cookies.getAll();
+        allItems = Object.values(allItems);
+        for (let i = 0; i < allItems.length; i++) {
+            console.log(allItems[i]);
+            axios.post("/addOrderItem", {
+                orderNumber: `${number + name + period}`,
+                idModel: allItems[i].id,
+                quantity: allItems[i].quantity,
+                size: allItems[i].size,
+                color: allItems[i].color,
+                price: allItems[i].price
+            });
+        }
         alert("Заказ принят");
     }
 

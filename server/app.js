@@ -161,7 +161,9 @@ app.post('/addOrderItem', async (req, res) => {
   const quantity = req.body.quantity;
   const size = req.body.size;
   const color = req.body.color;
-  connection.query(`INSERT INTO \`orders\` (\`order_number\`, \`id_model\`, \`quantity\`, \`size\`, \`color\`) VALUES ('${orderNumber}', '${idModel}, '${quantity}, '${size}, '${color}'`);
+  const price = req.body.price;
+  console.log(`INSERT INTO \`orders\` (\`order_number\`, \`id_model\`, \`quantity\`, \`size\`, \`color\`, \`price\`) VALUES ('${orderNumber}', '${idModel}, '${quantity}, '${size}, '${color}', '${price}');`);
+  connection.query(`INSERT INTO \`orders\` (\`order_number\`, \`id_model\`, \`quantity\`, \`size\`, \`color\`, \`price\`) VALUES ('${orderNumber}', '${idModel}', '${quantity}', '${size}', '${color}', '${price}');`);
   res.send();
 });
 
